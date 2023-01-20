@@ -1,12 +1,22 @@
 import './App.css';
-import RegistrationForm from './Components/RegistrationForm'
 import Home from './Components/Home'
+import Register from './Components/Register'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
-     <RegistrationForm />
-    </div>
+    <Router >
+      <div className="App">
+        <div className="container">
+          <Routes>
+
+            <Route exact path="/home" element={<Home />} />
+            <Route exact path="/signup" element={<Register />} />              
+
+          </Routes  >
+        </div>
+      </div>
+    </Router>
   );
 }
 
