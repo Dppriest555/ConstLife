@@ -54,7 +54,7 @@ const Profile = () => {
                 console.log("Picture Added")
             })
 
-        getDownloadURL(ref(storage, `profile-images/${user.uid}`))
+         getDownloadURL(ref(storage, `profile-images/${user.uid}`))
             .then((url) => {
                 // `url` is the download URL for 'images/stars.jpg'
 
@@ -67,7 +67,7 @@ const Profile = () => {
             })
             .then(() => {
                 console.log('Profile Image updated!');
-                navigate("/profile")
+                navigate("/")
             })
             .catch((error) => {
                 setError(error);
@@ -77,42 +77,55 @@ const Profile = () => {
 
     const logout = async () => {
         await signOut(auth);
+        navigate("/")
     };
 
 
 
     return (
-        <div>
-            <div className="container">
+        <div className=" bg-white bg-opacity-75 w-1/2 h-5/6 flex flex-col justify-center rounded-xl">
+            <div className="container flex items-center flex-col">
+                <div className="uPhoto">
 
+                    <img className="rounded-xl" src={user.photoURL} alt="Profile" width="200" height="200" />
+                </div>
 
-                <img src={user.photoURL} alt="Profile" width="200" height="200" />
                 <br />
-                <h4>{user.displayName}</h4>
+                <div className="mb-2 text-3xl text-slate-900 text-opacity-80">
+                    <h4>{user.displayName}</h4>
+                </div>
 
+                <div>
+                    <input
+                        className="placeholder:italic mb-6 placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        placeholder={user.displayName}
+                        onChange={(event) => {
+                            setUserName(event.target.value);
+                        }}
+                    />
+                </div>
+                <div className="flex flex-col items-center">
 
-                <input
-                    className="text-input-grey"
-                    placeholder={user.displayName}
-                    onChange={(event) => {
-                        setUserName(event.target.value);
-                    }}
-                />
+                    <label className="mb-4 font-bold text-slate-900">
+                        Profile Image:
+                    </label>
+                    <input className="block w-full text-sm text-slate-500
+                                    file:mr-4 pl-10 mb-4 file:py-2 file:px-4
+                                    file:rounded-full file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-violet-50 file:text-cyan-900
+                                    hover:file:bg-violet-100" type="file" onChange={handleFileChange} />
+
+                    {error && <p>{error.message}</p>}
+                    <br />
+                    <button className="btn bg-green-400 w-20 h-10 rounded-lg font-bold text-cyan-900" onClick={update}>Update</button>
+                </div>
+
                 <br />
-                <br />
-                <label>
-                    Profile Image:
-                    <input type="file" onChange={handleFileChange} />
-                </label>
-                {error && <p>{error.message}</p>}
-                <br />
-                <button className="btn" onClick={update}>Update</button>
-            </div>
-            <br />
-            <div className="log-out">
-                <h4> User Logged In: </h4>
-                {user?.email}
-                <button className="btn" onClick={logout}>Sign Out</button>
+                <div className="log-out flex flex-col text-xs text-slate-900">
+                    <h4> User Logged In: {user?.email}</h4>
+                    <button className="btn mt-2 text-sm" onClick={logout}>Sign Out</button>
+                </div>
             </div>
         </div>
     )

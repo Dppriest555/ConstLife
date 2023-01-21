@@ -10,8 +10,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <Router >
-      <div className="App">
-        <div className="container">
+      <div className="App h-screen  flex justify-center bg-gradient-to-r from-cyan-500 to-blue-500">
+        <div className="container flex justify-center items-center">
           <Routes>
 
             <Route exact path="/" element={<Home />} />
