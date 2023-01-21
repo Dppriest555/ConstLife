@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../CSS/HomePage.css';
-import pic from '../Images/mock.png';
+import pic from '../Images/blovks.svg';
 
 export default function Home() {
 
