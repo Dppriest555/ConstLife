@@ -15,7 +15,8 @@ const firebaseConfig = {
   storageBucket: "constlife-a94ad.appspot.com",
   messagingSenderId: "1069523709677",
   appId: "1:1069523709677:web:4c8f0ae9b28a2cdc1a66e4",
-  measurementId: "G-J9T4EJ4GTT"
+  measurementId: "G-J9T4EJ4GTT",
+  storageBucket: 'gs://constlife-a94ad.appspot.com/'
 };
 
 // Initialize Firebase
