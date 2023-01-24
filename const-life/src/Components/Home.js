@@ -35,7 +35,7 @@ export default function Home() {
 
 
   return (
-    <div className='bg-white bg-opacity-75 w-1/2 h-5/6 flex flex-col justify-between items-center rounded-xl'>
+    <div className='bg-white bg-opacity-75 w-full h-full flex flex-col justify-between items-center'>
       <nav style={divStyle} className='flex flex-col w-full h-10 rounded-xl'>
         <ul className='flex justify-evenly w-full z-10 items-center text-cyan-900 font-bold'>
           <li>
