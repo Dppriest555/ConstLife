@@ -30,15 +30,18 @@ const Register = () => {
     };
 
     return (
-        <div className="container">
+        <div className="bg-white bg-opacity-75 justify-end w-full h-full flex flex-col items-center">
 
-            <div className="image image-login"></div>
+            <div className="login-container flex flex-col">
 
             <div className="login-container container">
+                <div>
                 <h2>Get Started</h2>
                 <br />
                 <p>Create profile and continue</p>
                 <br />
+                </div>
+                <div className="flex flex-col">
                 <input
                     className="text-input"
                     placeholder="Email..."
@@ -60,6 +63,8 @@ const Register = () => {
                 <span>
                     Already have an account?
                 </span>
+                </div>
+            </div>
             </div>
         </div>
     );

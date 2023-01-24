@@ -33,6 +33,7 @@ function Food(url) {
                     data.map((fitem, index) =>
                         <div className="flex" key={index}>
                            <h1>{fitem.name + " :"}</h1><h1 className="ml-6">{fitem.calories} Calories </h1>
+                           <h1>{fitem.serving_size_g + " :"}</h1><h1 className="ml-6">{fitem.carbohydrates_total_g} </h1>
                         </div>
                     )
                 }
