@@ -10,8 +10,9 @@ import {
 
 
 
-function Food() {
+function Food(url) {
     const [searchFood, setSearchFood] = useState("");
+    const [food, setFood] = useState("");
     const [user, setUser] = useState({});
 
 
@@ -23,7 +24,7 @@ function Food() {
     }, []);
 
 
-    const { data, loading, error } = useFetch('https://api.api-ninjas.com/v1/nutrition?query=' + searchFood);
+    const { data, loading, error } = useFetch('https://api.api-ninjas.com/v1/nutrition?query=' + food);
     if (loading) {
         return <div>Loading...</div>
     }
@@ -34,7 +35,7 @@ function Food() {
 
 
     const addFoodToDb = () => {
-        const foodRef = doc(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`, `banana`);
+        const foodRef = doc(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`, `${searchFood}`);
         setDoc(foodRef, { FoodData: data }, { merge: true });
         console.log(data)
 
@@ -48,7 +49,7 @@ function Food() {
         <div className='bg-slate-900  w-full h-full text-slate-200'>
             <div className="flex flex-col items-center">
                 <div className="mt-6">
-                    <form action="/food">
+                    
                         <input
                             className="text-input rounded-lg h-8 text-center text-gray-900 font-bold"
                             placeholder="Food Seach..."
@@ -57,7 +58,12 @@ function Food() {
                                 setSearchFood(event.target.value);
                             }}
                         />
-                    </form>
+                     <div>
+                        <button onClick={() => {
+                            setFood(searchFood)
+                            console.log(searchFood)
+                        }}>Search</button>
+                     </div>
                 </div>
                 <div className="mt-8">
                     {
