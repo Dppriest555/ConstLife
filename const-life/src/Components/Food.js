@@ -10,25 +10,18 @@ import {
 
 
 
-function Food(url) {
+function Food() {
     const [searchFood, setSearchFood] = useState("");
     const [user, setUser] = useState({});
 
-    onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-    });
-
 
     useEffect(() => {
-
-        const checkdata = async () => {
-            const foodRef = doc(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`, `banana`);
-            const docSnap = await getDoc(foodRef);
-            const results = docSnap.docs.map((doc) => ({ ...doc.data(), id:doc.id,}));
-            console.log(results)
-        }
-        checkdata(user.displayName)
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+        });
+        return () => unsubscribe();
     }, []);
+
 
     const { data, loading, error } = useFetch('https://api.api-ninjas.com/v1/nutrition?query=' + searchFood);
     if (loading) {
