@@ -23,7 +23,7 @@ function Food(url) {
             setUser(currentUser);
         });
         const checkdata = async () => {
-            const foodRef = collection(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`);
+            const foodRef = collection(db, 'FoodItems', `User: ${user.email}`, `${user.email}'s FoodCollection`);
             const docSnap = await getDocs(foodRef);
             setDocs(docSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id, })));
         }
@@ -44,14 +44,22 @@ function Food(url) {
 
 
     const addFoodToDb = () => {
-        const foodRef = doc(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`, `${searchFood}`);
-        setDoc(foodRef, { FoodData: data }, { merge: true });
-        console.log(data)
-        setDocs([...docs, { id: searchFood, FoodData: data }]);
+        const foodRef = doc(db, 'FoodItems', `User: ${user.email}`, `${user.email}'s FoodCollection`, `${searchFood}`);
+        setDoc(foodRef, { FoodData: data }, { merge: true }).then(() =>{
+            const checkdata = async () => {
+                const foodRef = collection(db, 'FoodItems', `User: ${user.email}`, `${user.email}'s FoodCollection`);
+                const docSnap = await getDocs(foodRef);
+                setDocs(docSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id, })));
+                console.log("Food item added successfully!");
+            }
+            checkdata();
+        }).catch(error => {
+            console.error("Error adding food item: ", error);
+        });
     }
 
     const deleteFoodFromDb = (foodId) => {
-        const foodRef = doc(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`, `${foodId}`);
+        const foodRef = doc(db, 'FoodItems', `User: ${user.email}`, `${user.email}'s FoodCollection`, `${foodId}`);
         deleteDoc(foodRef).then(() => {
             console.log("Food item deleted successfully!");
             setDocs(docs.filter(doc => doc.id !== foodId));
