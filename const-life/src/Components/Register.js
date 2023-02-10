@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+
 const Register = () => {
 
     const [registerEmail, setRegisterEmail] = useState("");
@@ -30,7 +31,7 @@ const Register = () => {
     };
 
     return (
-        <div className="bg-white bg-opacity-75 justify-end w-full h-full flex flex-col items-center">
+        <div className="text-slate-200 h-full flex flex-col justify-between items-center">
 
             <div className="login-container flex flex-col">
 
@@ -43,7 +44,7 @@ const Register = () => {
                 </div>
                 <div className="flex flex-col">
                 <input
-                    className="text-input"
+                    className="text-input text-slate-900"
                     placeholder="Email..."
                     onChange={(event) => {
                         setRegisterEmail(event.target.value);
@@ -51,7 +52,7 @@ const Register = () => {
                 />
 
                 <input
-                    className="text-input"
+                    className="text-input text-slate-900"
                     placeholder="Password..."
                     type="password"
                     onChange={(event) => {

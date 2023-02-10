@@ -7,7 +7,7 @@ import {
     onAuthStateChanged,
     signOut
 } from "firebase/auth";
-import { async } from "@firebase/util";
+import Navbar from './NavBar';
 
 
 
@@ -43,7 +43,7 @@ const Profile = () => {
             console.log(auth.currentUser.displayName)
             console.log("Profile updated !")
         }).catch((error) => {
-            alert('an error occured')
+            alert('an error occured'+ error)
         })
             .then(() => {
                 if (profileImage === null) {
@@ -96,7 +96,8 @@ const Profile = () => {
 
 
     return (
-        <div className=" bg-white bg-opacity-75 w-full h-full flex flex-col  justify-center items-center">
+        <div className="text-slate-200 h-full flex flex-col justify-between items-center">
+            <Navbar />
 
             {isUploading ? (
                 <div>Loading...</div>
@@ -136,15 +137,9 @@ const Profile = () => {
 
                         {error && <p>{error.message}</p>}
                         <br />
-                        <button className="btn bg-green-400 w-20 h-10 rounded-lg font-bold text-cyan-900" onClick={update}>Update</button>
+                        <button className="btn bg-green-400 w-20 h-10 rounded-lg font-bold text-cyan-900 mb-6" onClick={update}>Update</button>
                     </div>
                     </form>
-
-                    <br />
-                    <div className="log-out flex flex-col text-xs text-slate-900">
-                        <h4> User Logged In: {user?.email}</h4>
-                        <button className="btn mt-2 text-sm" onClick={logout}>Sign Out</button>
-                    </div>
                 </div>
             )}
         </div>

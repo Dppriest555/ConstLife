@@ -14,7 +14,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <Router >
-      <div className="App h-screen w-screen flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500">
+      <div className="App h-screen w-screen bg-slate-900">
           <Routes>
             <Route element={<AuthWrapper />}>
             <Route exact path="/" element={<Home />} />           

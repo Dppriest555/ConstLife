@@ -7,6 +7,7 @@ import {
     onAuthStateChanged,
     signOut
 } from "firebase/auth";
+import Navbar from './NavBar';
 
 
 
@@ -35,7 +36,7 @@ function Food(url) {
     const { data, loading, error } = useFetch('https://api.api-ninjas.com/v1/nutrition?query=' + food);
 
     if (loading) {
-        return <div>Loading...</div>
+        return <div className="flex items-center justify-center text-6xl w-full h-full text-zinc-200">Loading...</div>
     }
     if (error) {
         console.log(error)
@@ -77,6 +78,7 @@ function Food(url) {
 
     return (
         <div className='bg-slate-900  w-full h-full text-slate-200'>
+            <Navbar />
             <div className="flex flex-col items-center">
                 <div className="mt-6">
 

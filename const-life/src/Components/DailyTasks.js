@@ -8,6 +8,7 @@ import {
     signOut
 } from "firebase/auth";
 import 'react-calendar/dist/Calendar.css';
+import Navbar from './NavBar';
 
 const DailyTasks = () => {
     const [value, setValue] = useState(new Date());
@@ -72,7 +73,8 @@ const DailyTasks = () => {
 
 
     return (
-        <div>
+        <div className='h-full'>
+            <Navbar />
             <div>
                 <Calendar
                     onChange={onChange}
