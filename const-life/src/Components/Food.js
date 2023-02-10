@@ -74,6 +74,7 @@ function Food(url) {
                         <button onClick={() => {
                             setFood(searchFood)
                             console.log(searchFood)
+                            console.log(docs)
                         }}>Search</button>
                      </div>
                 </div>
