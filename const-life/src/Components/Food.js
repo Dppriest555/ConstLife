@@ -21,13 +21,11 @@ function Food(url) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            console.log(currentUser);
         });
         const checkdata = async () => {
             const foodRef = collection(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`);
             const docSnap = await getDocs(foodRef);
             setDocs(docSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id, })));
-            console.log(docs)
         }
         checkdata();
         unsubscribe();
@@ -86,7 +84,6 @@ function Food(url) {
                         <button onClick={() => {
                             setFood(searchFood)
                             console.log(searchFood)
-                            console.log(docs)
                         }}>Search</button>
                     </div>
                 </div>
