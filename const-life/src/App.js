@@ -4,6 +4,7 @@ import Register from './Components/Register'
 import Login from './Components/Login'
 import Profile from './Components/Profile'
 import Food from './Components/Food'
+import DailyTasks from './Components/DailyTasks'
 import AuthWrapper from './CustomFunctions/AuthWrapper';
 
 
@@ -19,6 +20,7 @@ function App() {
             <Route exact path="/" element={<Home />} />           
             <Route exact path="/profile" element={<Profile />} />              
             <Route exact path="/food" element={<Food />} />
+            <Route exact path="/dailytasks" element={<DailyTasks />} />
             </Route>
             <Route exact path="/signup" element={<Register />} />  
             <Route exact path="/signin" element={<Login />} />   
