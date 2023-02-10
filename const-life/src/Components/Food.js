@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useFetch from './useFetch';
-import { doc, setDoc, getDocs, collection, } from "firebase/firestore";
+import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase'
 import { auth } from "../firebase";
 import {
@@ -17,6 +17,7 @@ function Food(url) {
     const [user, setUser] = useState({});
 
 
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
@@ -25,7 +26,7 @@ function Food(url) {
         const checkdata = async () => {
             const foodRef = collection(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`);
             const docSnap = await getDocs(foodRef);
-            setDocs(docSnap.docs.map((doc) => ({ ...doc.data(), id:doc.id,})));
+            setDocs(docSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id, })));
             console.log(docs)
         }
         checkdata();
@@ -34,7 +35,7 @@ function Food(url) {
 
 
     const { data, loading, error } = useFetch('https://api.api-ninjas.com/v1/nutrition?query=' + food);
-    
+
     if (loading) {
         return <div>Loading...</div>
     }
@@ -48,10 +49,21 @@ function Food(url) {
         const foodRef = doc(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`, `${searchFood}`);
         setDoc(foodRef, { FoodData: data }, { merge: true });
         console.log(data)
-
+        setDocs([...docs, { id: searchFood, FoodData: data }]);
     }
 
-    
+    const deleteFoodFromDb = (foodId) => {
+        const foodRef = doc(db, 'FoodItems', `User: ${user.displayName}`, `${user.displayName}'s FoodCollection`, `${foodId}`);
+        deleteDoc(foodRef).then(() => {
+            console.log("Food item deleted successfully!");
+            setDocs(docs.filter(doc => doc.id !== foodId));
+        }).catch(error => {
+            console.error("Error deleting food item: ", error);
+        });
+    };
+
+
+
 
 
 
@@ -61,22 +73,22 @@ function Food(url) {
         <div className='bg-slate-900  w-full h-full text-slate-200'>
             <div className="flex flex-col items-center">
                 <div className="mt-6">
-                    
-                        <input
-                            className="text-input rounded-lg h-8 text-center text-gray-900 font-bold"
-                            placeholder="Food Seach..."
-                            type="input"
-                            onChange={(event) => {
-                                setSearchFood(event.target.value);
-                            }}
-                        />
-                     <div>
+
+                    <input
+                        className="text-input rounded-lg h-8 text-center text-gray-900 font-bold"
+                        placeholder="Food Seach..."
+                        type="input"
+                        onChange={(event) => {
+                            setSearchFood(event.target.value);
+                        }}
+                    />
+                    <div>
                         <button onClick={() => {
                             setFood(searchFood)
                             console.log(searchFood)
                             console.log(docs)
                         }}>Search</button>
-                     </div>
+                    </div>
                 </div>
                 <div className="mt-8">
                     {
@@ -93,6 +105,7 @@ function Food(url) {
                         docs.map((item, index) =>
                             <div className="flex flex-row" key={index}>
                                 <div><h1>{item.id + " :"}</h1></div>
+                                <button onClick={() => deleteFoodFromDb(item.id)}>Delete</button>
                             </div>
                         )
                     }
