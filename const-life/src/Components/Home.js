@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-import pic from '../Images/blovks.svg';
 import { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import {
@@ -26,17 +24,8 @@ export default function Home() {
     navigate("/signin")
   };
 
-
-
-
-
-  const divStyle = {
-    backgroundColor: '#00cba9',
-  };
-
-
   return (
-    
+
     <div className='text-slate-200 h-full flex flex-col justify-between items-center'>
       <Navbar />
       <main className='h-3/5 flex flex-col justify-around items-center'>

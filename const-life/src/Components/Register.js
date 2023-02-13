@@ -25,6 +25,7 @@ const Register = () => {
                 registerPassword,
             );
             navigate("/profile");
+            console.log(user)
         } catch (error) {
             console.log(error.message);
         }

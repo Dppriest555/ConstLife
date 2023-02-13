@@ -4,8 +4,7 @@ import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore"
 import { db } from '../firebase'
 import { auth } from "../firebase";
 import {
-    onAuthStateChanged,
-    signOut
+    onAuthStateChanged
 } from "firebase/auth";
 import Navbar from './NavBar';
 

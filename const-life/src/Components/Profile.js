@@ -4,8 +4,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from 'react-router-dom';
 import {
     updateProfile,
-    onAuthStateChanged,
-    signOut
+    onAuthStateChanged
 } from "firebase/auth";
 import Navbar from './NavBar';
 
@@ -24,7 +23,7 @@ const Profile = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            setUserName(user.userName);
+            setUserName(currentUser.userName);
         });
         return () => unsubscribe();
     }, []);
@@ -87,12 +86,6 @@ const Profile = () => {
                 setError(error);
             });
     }
-
-    const logout = async () => {
-        await signOut(auth);
-        navigate("/")
-    };
-
 
 
     return (
