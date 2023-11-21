@@ -23,7 +23,7 @@ const Profile = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            setUserName(currentUser.userName);
+            setUserName(currentUser.displayName);
         });
         return () => unsubscribe();
     }, []);
@@ -36,56 +36,40 @@ const Profile = () => {
 
     const update = async () => {
         setIsUploading(true);
-        await updateProfile(auth.currentUser, {
-            displayName: userName,
-        }).then(() => {
-            console.log(auth.currentUser.displayName)
-            console.log("Profile updated !")
-        }).catch((error) => {
-            alert('an error occured'+ error)
-        })
-            .then(() => {
-                if (profileImage === null) {
-                    console.log("No image selected")
-                    setIsUploading(false);
-                    navigate("/profile");
-                }
-                else {
-
-                    // Create a storage reference
-                    const storage = getStorage();
-                    // Create a reference to the file
-                    const fileRef = ref(storage, `profile-images/${user.uid}`);
-                    // Upload the file
-                    getDownloadURL(ref(storage, `profile-images/${user.uid}`))
-                        .then((url) => {
-                            // `url` is the download URL for 'images/stars.jpg'
-
-                            // This can be downloaded directly:
-                            updateProfile(auth.currentUser, {
-                                photoURL: url,
-                            })
-                            console.log(url)
-                            console.log('Profile Image updated!');
-                        })
-                        .then(() => {
-                            uploadBytes(fileRef, profileImage)
-                                .then(() => {
-                                    setIsUploading(false);
-                                    navigate("/profile");
-                                    // Get the download URL
-                                    console.log("Picture Added")
-                                })
-                        })
-                        .catch((error) => {
-                            setError(error);
-                        });
-                }
-            })
-            .catch((error) => {
-                setError(error);
+    
+        try {
+            await updateProfile(auth.currentUser, {
+                displayName: userName,
             });
-    }
+    
+            if (profileImage !== null) {
+                const storage = getStorage();
+                const fileRef = ref(storage, `profile-images/${user.uid}`);
+                
+                // Upload the file
+                await uploadBytes(fileRef, profileImage);
+    
+                // Get the download URL after successful upload
+                const url = await getDownloadURL(fileRef);
+    
+                // Update the user's photoURL with the download URL
+                await updateProfile(auth.currentUser, {
+                    photoURL: url,
+                });
+    
+                console.log('Profile Image updated!');
+            }
+    
+            console.log('Profile updated!');
+            setIsUploading(false);
+            navigate("/profile");
+        } catch (error) {
+            setError(error);
+            setIsUploading(false);
+            console.error('Error updating profile:', error);
+        }
+    };
+    
 
 
     return (
@@ -98,7 +82,7 @@ const Profile = () => {
                 <div className="container flex items-center flex-col">
                     <div className="uPhoto">
 
-                        <img className="rounded-xl" src={user.photoURL} alt="Profile" width="200" height="200" />
+                        <img className="rounded-xl" src={user.photoURL} alt="Profile" width="400" height="400" />
                     </div>
 
                     <br />

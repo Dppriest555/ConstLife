@@ -96,22 +96,34 @@ function Food(url) {
                         }}>Search</button>
                     </div>
                 </div>
-                <div className="mt-8">
+                <div className="mt-8 flex">
                     {
                         data.map((fitem, index) =>
                             <div onClick={addFoodToDb} className="flex flex-row" key={index}>
-                                <div><h1>{fitem.name + " :"}</h1><h1 className="ml-4">{fitem.calories} Calories </h1></div>
-                                <div> <h1>{fitem.serving_size_g}</h1><h1 className="ml-4">{fitem.carbohydrates_total_g} </h1></div>
+                                <div><h1>{fitem.name}</h1><h1 className="ml-4">{fitem.calories} Calories </h1>
+                                 <h1>{fitem.serving_size_g}</h1><h1 className="ml-4">{fitem.carbohydrates_total_g} </h1></div>
                             </div>
                         )
                     }
                 </div>
-                <div className="mt-8">
+                <div className="mt-8 flex">
                     {
                         docs.map((item, index) =>
-                            <div className="flex flex-row" key={index}>
-                                <div><h1>{item.id + " :"}</h1></div>
-                                <button onClick={() => deleteFoodFromDb(item.id)}>Delete</button>
+                            <div className="flex flex-col p-6 items-center" key={index}>
+                                <div><h1>{"Name : " + item.id}</h1></div>
+                                <div><h1>{"Serving size : " + item.FoodData.map((obj)=>{
+                                    return(obj.serving_size_g + "g")    
+                                })}</h1></div>
+                                <div><h1>{"Calories : " + item.FoodData.map((obj)=>{
+                                    return(obj.calories)    
+                                })}</h1></div>
+                                <div><h1>{"Carbs : " + item.FoodData.map((obj)=>{
+                                    return(obj.carbohydrates_total_g + "g")    
+                                })}</h1></div>
+                                <div><h1>{"Sugar : " + item.FoodData.map((obj)=>{
+                                    return(obj.sugar_g + "g")    
+                                })}</h1></div>
+                                <button className="mt-6 text-xl" onClick={() => deleteFoodFromDb(item.id)}>Delete</button>
                             </div>
                         )
                     }

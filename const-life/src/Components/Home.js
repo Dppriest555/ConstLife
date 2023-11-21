@@ -31,9 +31,9 @@ export default function Home() {
       <main className='h-3/5 flex flex-col justify-around items-center'>
         <h1 className='text-center text-3xl'>Welcome to our website {user?.displayName}!</h1>
         <div className="log-out flex flex-col text-xs text-slate-900">
-          <h4> User Logged In: {user?.email}</h4>
+          <h4 className="text-white"> User Logged In: {user?.email}</h4>
           <div className="uPhoto">
-            <img className="rounded-xl" src={user.photoURL} alt="Profile" width="200" height="200" />
+            <img className="rounded-xl" src={user.photoURL} alt="Profile" width="400" height="00" />
           </div>
           <button className="btn mt-2 text-sm text-gray-300" onClick={logout}>Sign Out</button>
         </div>
